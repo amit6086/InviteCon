@@ -50,8 +50,29 @@
       </tr>
     </thead>
     <tbody id="data-table">
-      <!-- נתונים יוזנו כאן בהמשך -->
+      <!-- נתונים יוזנו אוטומטית -->
     </tbody>
   </table>
+
+  <script>
+    async function fetchRSVPs() {
+      const response = await fetch("http://localhost:3000/data");
+      const data = await response.json();
+      const tableBody = document.getElementById("data-table");
+      tableBody.innerHTML = "";
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.name || ''}</td>
+          <td>${row.attending || ''}</td>
+          <td>${row.guests || ''}</td>
+          <td>${row.phone || ''}</td>
+          <td>${row.notes || ''}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+    fetchRSVPs();
+  </script>
 </body>
 </html>
